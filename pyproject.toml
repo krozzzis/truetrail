@@ -3,4 +3,8 @@ name = "truetrail"
 version = "0.1.0"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+
+dependencies = [
+    "fastapi[standard]>=0.115.12",
+    "sqlmodel>=0.0.24",
+]
