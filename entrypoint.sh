@@ -3,4 +3,6 @@ set -e
 
 cd /app
 
-exec uv run src/main.py
+uv run alembic upgrade head
+
+exec uv run fastapi run src/main.py

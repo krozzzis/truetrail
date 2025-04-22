@@ -9,12 +9,12 @@ class Activity(SQLModel):
 
 
 class Session(Activity, table=True):
-    id: int = Field(primary_key=True)
+    id: Optional[int] = Field(default=None, primary_key=True)
     start_time: datetime
     end_time: Optional[datetime] = None
 
 
 class Action(Activity, table=True):
-    id: int = Field(primary_key=True)
+    id: Optional[int] = Field(default=None, primary_key=True)
     timestamp: datetime
     action_type: str

@@ -1,15 +1,30 @@
 services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    restart: no
+    env_file:
+      - ./.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    shm_size: "128m"
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+
   backend:
-    # Build the image from the Dockerfile in the current directory
     build: .
 
-    # Host the FastAPI application on port 8000
     ports:
       - "8000:8000"
 
+    env_file:
+      - ./.env
+
     develop:
-      # Create a `watch` configuration to update the app
-      # https://docs.docker.com/compose/file-watch/#compose-watch-versus-bind-mounts
       watch:
         # Sync the working directory with the `/app` directory in the container
         - action: sync
@@ -23,3 +38,6 @@ services:
         # Rebuild the image if dependencies change by checking uv.lock
         - action: rebuild
           path: ./uv.lock
+
+volumes:
+  pg_data:
